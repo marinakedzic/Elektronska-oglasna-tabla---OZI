@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/css/main.css">
 <script src="https://kit.fontawesome.com/b451c9b96d.js"></script>
 
-    <title>Hello, world!</title>
+    <title>Teacher Panel</title>
 	
 	
   </head>
@@ -86,33 +86,9 @@
             </li>
             <li class="nav-item mr-5">
               <a class="nav-link" href="#">
-                <img
-                  src="images/team-1.png"
-                  class="img-fluid rounded-circle img-thumbnail"
-                  alt="Logo"
-                  style="width:30px;"
-                />
+              <img th:src="@{/images/team-1.png}" class="img-fluid rounded-circle img-thumbnail" alt="Logo" style="width:30px;"/>
               </a>
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                data-toggle="modal"
-                data-target="#sign-out" 
-                href="#"
-              >
-                <i class="fa fa-sign-out"></i> Izlaz
-              </a>
-            </li>
-            <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-        <form th:action="@{/teachers/messages}" method="get">
-          <input type="submit" value="Messages"/>
-      </form>
-      <form th:action="@{/teachers/opendlista}" method="get">
-            <input type="submit" value="Open doors"/>
-        </form>
      <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 
   
@@ -133,12 +109,11 @@
         >
           <a class="navbar-brand py-3" href="#">
             <img
-              src="images/team-1.png"
+              th:src="@{/images/team-1.png}"
               class="img-fluid rounded-circle img-thumbnail mr-3"
               alt="Logo"
               style="width:50px;"
             />
-            Milena
           </a>
           <hr />
           <ul class="navbar-nav flex-column">
@@ -206,60 +181,6 @@
             </div>
           </div>
           <!-- end of title row -->
-          
-           <h2>Welcome to jCombat Demo on Thymeleaf Integration!</h2>
-	<p>Sample dropdown list has been populated below using Thymeleaf:</p>
-          <div >
-              <table border="1" >
-                    <thead>
-                        <tr>
-                            <th>Ime ucenika</th>   
-                            <th>Prezime ucenika</th>
-                        </tr>
-                    </thead >
-			 <tbody>                      
-                    </tbody>
-                </table>
-        </div>
-      
-     
-           
-        </div>
-             <div class="w3-container">
-               
-        
-
-</div>
-            
-            <div>
-        <table border="1" id="table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Student Name</th>
-                            <th>Subject Name</th>
-                            <th>Grade</th>
-                            <th>Class</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="tr1">
-                            <td>id</td>
-
-                            <td id="td1"></td>
-                            <td id="td2" ></td>
-                            <td id="td3"></td>
-                            <td id="td4"></td>
-                            <td id="td5"></td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-        </div>
-          <!-- cards row -->
-          
-          
-  
 
           <div class="row inform-card">
             <div class="col-lg-3 col-md-6 col-10 mx-auto my-5">
@@ -268,24 +189,8 @@
                   <div class="flex d-flex justify-content-between">
                     <i class="fa fa-home body-icon"></i>
                     <div class="side-text align-self-center">
-                      <h3>20 NEW</h3>
-                      <h5>Orders</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
-                  <a href="#">Learn More</a> <i class="fa fa-refresh"></i>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-10 mx-auto my-5">
-              <div class="card card-2">
-                <div class="card-body">
-                  <div class="flex d-flex justify-content-between">
-                    <i class="fa fa-users body-icon"></i>
-                    <div class="side-text align-self-center">
-                      <h3>20 NEW</h3>
-                      <h5>Users</h5>
+                      <h3>Timetables</h3>
+                      <h5>Coming soon</h5>
                     </div>
                   </div>
                 </div>
@@ -300,13 +205,13 @@
                   <div class="flex d-flex justify-content-between">
                     <i class="fa fa-envelope  body-icon"></i>
                     <div class="side-text align-self-center">
-                      <h3>20 NEW</h3>
+                      <h3>SEE</h3>
                       <h5>Messages</h5>
                     </div>
                   </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                  <a href="#">Learn More</a> <i class="fa fa-refresh"></i>
+                  <a href="/teachers/messages">Click here</a> <i class="fa fa-refresh"></i>
                 </div>
               </div>
             </div>
@@ -316,80 +221,20 @@
                   <div class="flex d-flex justify-content-between">
                     <i class="fa fa-suitcase  body-icon"></i>
                     <div class="side-text align-self-center">
-                      <h3>20 NEW</h3>
-                      <h5>Orders</h5>
+                      <h3>SEE</h3>
+                      <h5>Open Doors</h5>
                     </div>
                   </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                  <a href="#">Learn More</a> <i class="fa fa-refresh"></i>
+                  <a href="/teachers/opendlista">Click here</a> <i class="fa fa-refresh"></i>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- end of cards row -->
-          <!-- charts -->
-          <div class="row">
-            <div class="col-md-6 col-lg-4 my-5">
-              <div class="card">
-                <div class="card-title text-center">
-                  <h1 class="text-uppercase">Line Chart</h1>
-                </div>
-                <canvas id="line-chart"></canvas>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4 my-5 mx-auto order-3 order-lg-2">
-              <div class="card">
-                <div class="card-title text-center">
-                  <h1 class="text-uppercase">Dougnut Chart</h1>
-                </div>
-                <canvas id="doughnut-chart"></canvas>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-4 my-5 order-2 order-lg-3">
-              <div class="card">
-                <div class="card-title text-center">
-                  <h1 class="text-uppercase">Bar Chart</h1>
-                </div>
-                <canvas id="bar-chart"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- The Modal -->
-    <div class="modal fade" id="sign-out">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Already want to leave?</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-          </div>
-
-          <!-- Modal body -->
-          <div class="modal-body">
-            It is sad to see you go. Please Press Logout to leave.
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">
-              Stay Here
-            </button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+         
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.min.js"></script>

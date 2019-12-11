@@ -101,7 +101,7 @@
     </nav>
     <!-- end of nav -->
 
-    <!-- main content -->
+ <!-- main content -->
 
     <div class="container-fluid">
       <div class="row">
@@ -177,12 +177,52 @@
             <div class="col">
               <h3>
                 <span class="text-uppercase text-danger">Dashboard /</span
-                ><span class="text-muted small"> My Dashboard</span>
+                ><span class="text-muted small"> EDIT PARENT</span>
               </h3>
             </div>
           </div>
           <!-- end of title row -->
-          <!-- cards row -->
+
+ <div>
+          <h3>Edit parent</h3>
+          <form action="#" th:action="@{/admin/editparents}" th:object="${parents}"
+            method="post">
+ 
+            <table border="0" cellpadding="10">
+                <tr>             
+                    <td>Teacher ID:</td>
+                    <td>
+                        <input type="text" th:field="*{idParents}" readonly="readonly" />
+                    </td>
+                </tr>        
+                <tr>             
+                    <td>EDIT DATA:</td>
+                    <td>
+                        <input type="text" th:field="*{name}" />
+                    </td>
+                     <td>
+                        <input type="text" th:field="*{surname}" />
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{username}" />
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{email}" />
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{password}" />
+                    </td>
+                </tr>                          
+                <tr>
+                    <td colspan="2"><button type="submit">Save</button> </td>
+                </tr>
+            </table>
+        </form>
+           </div>
+
+          
+          
+           <!-- cards row -->
 
           <div class="row inform-card">
             <div class="col-lg-3 col-md-6 col-10 mx-auto my-5">
@@ -213,7 +253,7 @@
                   </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                  <a href="/admin/listparents">Click here</a><i class="fa fa-refresh"></i>
+                  <a href="/admin/novikorisnik">Click here</a><i class="fa fa-refresh"></i>
                 </div>
               </div>
             </div>
@@ -252,7 +292,6 @@
           </div>
 
           <!-- end of cards row -->
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.min.js"></script>
@@ -273,5 +312,6 @@
         '<i class="fa fa-arrow-down fa-3x text-white"></i>'
       );
     </script>
+ 
   </body>
 </html>

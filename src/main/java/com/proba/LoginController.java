@@ -11,7 +11,6 @@ package com.proba;
  */
 
 
-import com.proba.model.Admin;
 import com.proba.model.Parents;
 import com.proba.model.Teachers;
 import com.proba.model.Messages;
@@ -23,15 +22,9 @@ import com.proba.service.TeachersServices;
 import com.proba.service.MessagesService;
 import com.proba.service.NewsService;
 import com.proba.service.OpenDoorServices;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-//import org.apache.commons.collections.ListUtils;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -46,7 +39,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -88,26 +80,16 @@ public class LoginController {
     @RequestMapping(value="/teachers/home", method = RequestMethod.GET)
     public ModelAndView home2(@Param ("email") String email){
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();  
-         Parents parents = parentsService.findParentsByEmail(auth.getName()); //email Parents dobijen
         modelAndView.setViewName("/teachers/home");
         return modelAndView;
     }
      @RequestMapping(value="/parents/home", method = RequestMethod.GET)
     public ModelAndView home3( @Param ("email") String email){
         ModelAndView modelAndView = new ModelAndView();
+        //ako zelimo da dobijemo podatke o tom nekom useru
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();  
-         Parents parents = parentsService.findParentsByEmail(auth.getName()); //email Parents dobijen    
+        Parents parents = parentsService.findParentsByEmail(auth.getName()); //email Parents dobijen    
         modelAndView.setViewName("/parents/home");
-        return modelAndView;
-    }
-    
-     
-    
-     @RequestMapping(value="/index", method = RequestMethod.GET)
-    public ModelAndView home8(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/index");
         return modelAndView;
     }
     
@@ -348,17 +330,58 @@ public class LoginController {
             modelAndView.setViewName("/admin/novikorisnik");}
         return modelAndView;
     }
+        //IZMENA Roditelja
+    //lista svih
+       @RequestMapping(value="/admin/listparents", method = RequestMethod.GET)
+       public ModelAndView showParents(){
+       ModelAndView modelAndView = new ModelAndView();
+       List <Parents> listparents = parentsService.listaroditelja();
+       modelAndView.addObject("listparents", listparents);
+       modelAndView.setViewName("/admin/listparents");
+       return modelAndView;
+   }
+   //edit prikaz strane
+       @RequestMapping("/admin/editparents/{id}")
+    public ModelAndView showEditParentsPage(@PathVariable(name = "id") Integer id) {
+    ModelAndView modelAndView = new ModelAndView("/admin/editparents");
+    Parents parents = parentsService.get(id);
+    modelAndView.addObject("parents", parents);
+    return modelAndView;
+    }
+         @RequestMapping(value="/admin/editparents", method = RequestMethod.GET)
+    public ModelAndView editParent(){
+        ModelAndView modelAndView = new ModelAndView();
+        Parents parents = new Parents();
+       modelAndView.addObject("parents", parents);  
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/admin/editparents", method = RequestMethod.POST)
+    public ModelAndView editParent(@Valid Parents parents, BindingResult bindingResult, ModelMap modelMap) {
+        ModelAndView modelAndView = new ModelAndView();
+            parentsService.saveParents(parents);
+            modelAndView.setViewName("/admin/home");
+        return modelAndView;
+     }
+
+   //delete
+    @RequestMapping("/admin/deleteparents/{id}")
+    public String deleteParents(@PathVariable(name = "id") Integer id) {
+        parentsService.delete(id);
+        return "redirect:/admin/listparents";       
+    } 
+
  //NOVI NASTAVNIK  
-    @RequestMapping(value="/admin/novinastavnik", method = RequestMethod.GET)
-    public ModelAndView novinastavnik(){
+    @RequestMapping(value="/admin/addNewTeacher", method = RequestMethod.GET)
+    public ModelAndView addNewTeacher(){
         ModelAndView modelAndView = new ModelAndView();
         Teachers teachers = new Teachers();
         modelAndView.addObject("teachers", teachers);  
         return modelAndView;
     }
     
-    @RequestMapping(value = "/admin/novinastavnik", method = RequestMethod.POST)
-    public ModelAndView createNewKorisnik(@Valid Teachers teachers, BindingResult bindingResult, ModelMap modelMap) {
+    @RequestMapping(value = "/admin/addNewTeacher", method = RequestMethod.POST)
+    public ModelAndView addNewTeacher(@Valid Teachers teachers, BindingResult bindingResult, ModelMap modelMap) {
         ModelAndView modelAndView = new ModelAndView();
         Teachers teachersExists = teachersServices.findByEmail(teachers.getEmail());
         if (teachersExists != null) {
@@ -367,15 +390,57 @@ public class LoginController {
                             "There is already a user registered with the email provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("/admin/novinastavnik");
+            modelAndView.setViewName("/admin/listteachers");
         } else {
            teachersServices.saveTeacher(teachers);
             modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.setViewName("/admin/novinastavnik");
+            modelAndView.setViewName("/admin/addNewTeacher");
 
         }
         return modelAndView;
     }
+    //IZMENA Nastavnika
+    //lista svih
+       @RequestMapping(value="/admin/listteachers", method = RequestMethod.GET)
+       public ModelAndView showTeachers(){
+       ModelAndView modelAndView = new ModelAndView();
+       List <Teachers> listanastavnika = teachersServices.findTeachers();
+       modelAndView.addObject("listanastavnika", listanastavnika);
+       modelAndView.setViewName("/admin/listteachers");
+       return modelAndView;
+   }
+   //edit prikaz strane
+       @RequestMapping("/admin/editteachers/{id}")
+    public ModelAndView showEditTeachersPage(@PathVariable(name = "id") Integer id) {
+    ModelAndView modelAndView = new ModelAndView("/admin/editteachers");
+    Teachers teachers = teachersServices.get(id);
+    modelAndView.addObject("teachers", teachers);
+    return modelAndView;
+    }
+         @RequestMapping(value="/admin/editteacher", method = RequestMethod.GET)
+    public ModelAndView editTeacher(){
+        ModelAndView modelAndView = new ModelAndView();
+        Teachers teachers = new Teachers();
+       modelAndView.addObject("teachers", teachers);  
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/admin/editteacher", method = RequestMethod.POST)
+    public ModelAndView editTeacher(@Valid Teachers teachers, BindingResult bindingResult, ModelMap modelMap) {
+        ModelAndView modelAndView = new ModelAndView();
+            teachersServices.saveTeacher(teachers);
+            modelAndView.setViewName("/admin/home");
+        return modelAndView;
+     }
+
+   //delete
+    @RequestMapping("/admin/deleteteachers/{id}")
+    public String deleteTeachers(@PathVariable(name = "id") Integer id) {
+        teachersServices.delete(id);
+        return "redirect:/admin/listteachers";       
+    } 
+
+
 
 
 }

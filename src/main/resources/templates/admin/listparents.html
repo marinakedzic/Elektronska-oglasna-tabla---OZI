@@ -101,7 +101,7 @@
     </nav>
     <!-- end of nav -->
 
-    <!-- main content -->
+ <!-- main content -->
 
     <div class="container-fluid">
       <div class="row">
@@ -177,12 +177,36 @@
             <div class="col">
               <h3>
                 <span class="text-uppercase text-danger">Dashboard /</span
-                ><span class="text-muted small"> My Dashboard</span>
+                ><span class="text-muted small"> LIST OF PARENTS</span>
               </h3>
             </div>
           </div>
           <!-- end of title row -->
-          <!-- cards row -->
+         
+         <form th:action="@{/admin/novikorisnik}" method="get">
+           <input type="submit" value="Add new"/>
+       </form>
+          <br>
+          <div>
+              <h3>All parents</h3>
+         <table border="1" th:each="parents: ${listparents}">
+                    <thead>
+                        <tr> 
+                            <th th:text="${parents.name}"></th>
+                            <th th:text="${parents.surname}"></th>      
+                        </tr>
+                    </thead>
+			 <tbody>
+			     <a th:href="@{'/admin/editparents/' + ${parents.idParents}}">Edit</a>
+                             <a th:href="@{'/admin/deleteparents/' + ${parents.idParents}}">Delete</a>
+                    </tbody>
+            </table>
+
+        </div>
+       
+          
+          
+            <!-- cards row -->
 
           <div class="row inform-card">
             <div class="col-lg-3 col-md-6 col-10 mx-auto my-5">
@@ -213,7 +237,7 @@
                   </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                  <a href="/admin/listparents">Click here</a><i class="fa fa-refresh"></i>
+                  <a href="/admin/novikorisnik">Click here</a><i class="fa fa-refresh"></i>
                 </div>
               </div>
             </div>
@@ -273,5 +297,6 @@
         '<i class="fa fa-arrow-down fa-3x text-white"></i>'
       );
     </script>
+ 
   </body>
 </html>

@@ -68,6 +68,12 @@ private ParentsRepository parentsRepository;
     public List<Parents> findByName(String name) {
         return parentsRepository.findByNameLike("%"+name+"%");
     }
+    public Parents get(Integer id) {
+        return parentsRepository.findById(id).get();
+    }
+    public void delete(Integer id) {
+        parentsRepository.deleteById(id);
+    }
      }
     
 

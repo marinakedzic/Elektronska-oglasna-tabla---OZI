@@ -27,11 +27,7 @@ public class OpenDoorServices {
         opendoor.setTeachersIdTeachers(teachers);
         opendoorRepository.save(opendoor);
     }
-   
-     public void addOpenDoora (Opendoor opendoor, Teachers teachers){
-        opendoor.setTeachersIdTeachers(teachers);
-        opendoorRepository.save(opendoor);
-    }
+
     public List <Opendoor> findByParentsId (Integer idParents){
        return opendoorRepository.findOpenDoorByParentsId(idParents);
     }
@@ -58,5 +54,5 @@ public class OpenDoorServices {
         return opendoorRepository.save(o);
     }
      
-     
 }
+
